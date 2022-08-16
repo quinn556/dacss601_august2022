@@ -1,5 +1,5 @@
 ---
-title: "Challenge 1"
+title: "Challenge 1 Quinn He"
 author: "Quinn He"
 desription: "Reading in data and creating a post"
 date: "08/15/2022"
@@ -45,7 +45,7 @@ Find the `_data` folder, located inside the `posts` folder. Then you can read in
 
 ```{r}
 
-birds <- read_csv("../posts/_data/birds.csv", show_col_types = FALSE)
+birds <- read_csv("_data/birds.csv")
 
 view(birds)
 
@@ -57,17 +57,35 @@ Add any comments or documentation as needed. More challenging data sets may requ
 
 Using a combination of words and results of R commands, can you provide a high level description of the data? Describe as efficiently as possible where/how the data was (likely) gathered, indicate the cases and variables (both the interpretation and any details you deem useful to the reader to fully understand your chosen data).
 
+The birds data set contains a wide range of range of entries. With the function below we can see all the column names listed. A few are hard to figure out what exactly the represent and just how important they are. 
 ```{r}
-#| label: The birds dataset contains a wide range of range of entries. With the function below we can see all the column names listed. A few are hard to figure out what exactly the represent and just how important they are. 
 
 colnames(birds)
 
 ```
 
+It appears the data set was taken from a farm organization. The data is definitely a little messy, but makes sense on the data entry side. Each country has descending rows of chickens, ducks, and fowls from 1961 to 2018. This is mostly a bit redundant. This whole data set keeps track of the value of these three types of birds in a 60 year window. There is also a possibility this data set came from a larger set with other types of animals because the "Domain" column lists 'Livestock' throughout the entire data set. 
+
 ```{r}
-#| label: It appears the dataset was taken from a farm organization. The data is definitely a little messy, but makes sense on the data entry side. Each country has decsending rows of chickens, ducks, and fowls from 1961 to 2018. This is mostly a bit redundant. This whole dataset keeps track of the value of these three types of birds in a 60 year window. There is also a possibility this dataset came from a larger set with other types of animals becuase the "Domain" column lists 'Livestock' throughout the entire dataset. 
+#| label: Summary
 
 
+summary(birds)
+dim(birds)
+head(birds)
+tail(birds)
+#table(birds)
 
+ggplot(birds, mapping = aes(x = 'Year', y = 'Value'))
+```
+
+I'm wondering if I should use the %>% function here. I'm also having an issue with my functions because they don't run correctly. Is it from my the "delimiter" error above? It may also be an issue with my working directory. 
+
+I commented out 'table(birds)' because it was giving me an error when I rendered it the function. 
+
+
+```{r}
+birds %>%
+  select(Item)
 
 ```
