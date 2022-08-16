@@ -1,7 +1,6 @@
 ---
-title: "Challenge 1 Quinn He"
-
-author: "Quinn He"
+title: "Challenge 1 Instructions"
+author: "Meredith Rolfe"
 desription: "Reading in data and creating a post"
 date: "08/15/2022"
 format:
@@ -12,6 +11,7 @@ format:
     code-tools: true
 categories:
   - challenge_1
+  - railraods
 ---
 
 ```{r}
@@ -45,11 +45,8 @@ Read in one (or more) of the following data sets, using the correct R package an
 Find the `_data` folder, located inside the `posts` folder. Then you can read in the data, using either one of the `readr` standard tidy read commands, or a specialized package such as `readxl`.
 
 ```{r}
-
-birds <- read_csv("_data/birds.csv")
-
-view(birds)
-
+railroad <- read_csv("_data/railroad_2012_clean_county.csv")
+railroad
 ```
 
 Add any comments or documentation as needed. More challenging data sets may require additional code chunks and documentation.
@@ -58,35 +55,18 @@ Add any comments or documentation as needed. More challenging data sets may requ
 
 Using a combination of words and results of R commands, can you provide a high level description of the data? Describe as efficiently as possible where/how the data was (likely) gathered, indicate the cases and variables (both the interpretation and any details you deem useful to the reader to fully understand your chosen data).
 
-The birds data set contains a wide range of range of entries. With the function below we can see all the column names listed. A few are hard to figure out what exactly the represent and just how important they are. 
 ```{r}
+#| label: summary
+spec(railroad)
 
-
-colnames(birds)
+railroad %>%
+  filter(state == "AK")
+    
+railroad %>%
+  group_by(state) %>%
+  summarise(total_employees2 = sum(total_employees))
 
 ```
 
-It appears the data set was taken from a farm organization. The data is definitely a little messy, but makes sense on the data entry side. Each country has descending rows of chickens, ducks, and fowls from 1961 to 2018. This is mostly a bit redundant. This whole data set keeps track of the value of these three types of birds in a 60 year window. There is also a possibility this data set came from a larger set with other types of animals because the "Domain" column lists 'Livestock' throughout the entire data set. 
 
-```{r}
-#| label: Summary
-
-
-summary(birds)
-dim(birds)
-head(birds)
-tail(birds)
-#table(birds)
-
-ggplot(birds, mapping = aes(x = 'Year', y = 'Value'))
-```
-
-I'm wondering if I should use the %>% function here. I'm also having an issue with my functions because they don't run correctly. Is it from my the "delimiter" error above? It may also be an issue with my working directory. 
-
-I commented out 'table(birds)' because it was giving me an error when I rendered it the function. 
-
-
-```{r}
-birds %>%
-  select(Item)
-```
+When I used the spec() function, it returned the variable types of the columns. We know that state is type col_character(), county is type col_character() and total_employees is type col_double(). When I filtered through just the state of AK it returns the list of the total employees for each county in that state. I created a pipe that groups all the states together an than is summarized by the total amount of employees in each state. This pipe is useful because I now know how many total employees are in each state. This data was likely gathered in 2012 from the most used railroad stations in the USA. This dataset is also long in the sense that the column length is much greater than the amount of columns present.
